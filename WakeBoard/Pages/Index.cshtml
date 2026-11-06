@@ -4,10 +4,7 @@
     ViewData["Title"] = "Machine Status";
 }
 <h1>Machine Status</h1>
-@if (Model.Message is not null)
-{
-    <p class="message">@Model.Message</p>
-}
+<p id="message" class="message" hidden="@(Model.Message is null)">@Model.Message</p>
 <table data-refresh="@Model.RefreshIntervalMs">
     <thead>
         <tr>

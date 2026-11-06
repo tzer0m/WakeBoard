@@ -21,5 +21,22 @@ document.addEventListener('click', event => {
   if (target && !confirm(target.dataset.confirm)) { event.preventDefault(); }
 });
 
+document.addEventListener('submit', async event => {
+  event.preventDefault();
+  const button = event.submitter;
+  button.disabled = true;
+  const message = document.getElementById('message');
+  try {
+    const response = await fetch(button.formAction, { method: 'POST', body: new FormData(event.target), headers: { 'X-Requested-With': 'fetch' } });
+    const result = await response.json();
+    message.textContent = result.message;
+  } catch (error) {
+    console.error(error);
+    message.textContent = 'The request failed.';
+  }
+  message.hidden = false;
+  refreshStatus();
+});
+
 refreshStatus();
 setInterval(refreshStatus, Number(document.querySelector('table').dataset.refresh));

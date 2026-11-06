@@ -60,8 +60,7 @@ public class IndexModel(IOptions<MachineOptions> options, MachineStatusService s
         MachineConfig? machine = options.Value.Machines.FirstOrDefault(item => item.Name == name);
         if (machine is null) { return NotFound(); }
         PowerResult result = await wakeService.WakeAsync(machine);
-        Message = result.Message;
-        return RedirectToPage();
+        return Respond(result.Message);
     }
 
     /// <summary>
@@ -86,13 +85,15 @@ public class IndexModel(IOptions<MachineOptions> options, MachineStatusService s
     {
         MachineConfig? machine = options.Value.Machines.FirstOrDefault(item => item.Name == name);
         if (machine is null) { return NotFound(); }
-        if (action == "sleep" && !machine.CanSleep)
-        {
-            Message = $"{machine.Name} does not support sleep.";
-            return RedirectToPage();
-        }
+        if (action == "sleep" && !machine.CanSleep) { return Respond($"{machine.Name} does not support sleep."); }
         PowerResult result = await semaphoreService.RunAsync(machine, action);
-        Message = result.Message;
+        return Respond(result.Message);
+    }
+
+    private IActionResult Respond(string message)
+    {
+        if (Request.Headers.XRequestedWith == "fetch") { return new JsonResult(new { message }); }
+        Message = message;
         return RedirectToPage();
     }
 }
