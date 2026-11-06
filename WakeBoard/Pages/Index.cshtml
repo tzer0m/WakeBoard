@@ -3,13 +3,11 @@
 @{
     ViewData["Title"] = "Machine Status";
 }
-<h1>Machine Status</h1>
 <p id="message" class="message" hidden="@(Model.Message is null)">@Model.Message</p>
 <table data-refresh="@Model.RefreshIntervalMs">
     <thead>
         <tr>
             <th>Machine</th>
-            <th>Address</th>
             <th>Status</th>
             <th>Actions</th>
         </tr>
@@ -19,13 +17,12 @@
         {
             <tr data-name="@machine.Name">
                 <td>@machine.Name</td>
-                <td>@machine.Host</td>
                 <td><span class="badge checking">Checking</span></td>
                 <td>
                     <div class="actions">
                         @if (!string.IsNullOrWhiteSpace(machine.Mac))
                         {
-                            <form method="post">
+                            <form method="post" class="slot-wake">
                                 <input type="hidden" name="name" value="@machine.Name" />
                                 <button type="submit" class="wake" asp-page-handler="Wake">Wake</button>
                             </form>
@@ -34,14 +31,14 @@
                         {
                             @if (machine.CanSleep)
                             {
-                                <form method="post">
+                                <form method="post" class="slot-sleep">
                                     <input type="hidden" name="name" value="@machine.Name" />
                                     <button type="submit" class="power" asp-page-handler="Sleep" data-confirm="Put @machine.Name to sleep?">Sleep</button>
                                 </form>
                             }
-                            <form method="post">
+                            <form method="post" class="slot-power">
                                 <input type="hidden" name="name" value="@machine.Name" />
-                                <button type="submit" class="power danger" asp-page-handler="PowerOff" data-confirm="Power off @machine.Name?">Power Off</button>
+                                <button type="submit" class="power danger" asp-page-handler="PowerOff" data-confirm="Power off @machine.Name?">Power</button>
                             </form>
                         }
                     </div>
