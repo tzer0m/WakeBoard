@@ -1,10 +1,39 @@
-﻿@page
+@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Machine Status";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Machine Status</h1>
+@if (Model.Message is not null)
+{
+    <p class="message">@Model.Message</p>
+}
+<table data-refresh="@Model.RefreshIntervalMs">
+    <thead>
+        <tr>
+            <th>Machine</th>
+            <th>Address</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (MachineConfig machine in Model.Machines)
+        {
+            <tr data-name="@machine.Name">
+                <td>@machine.Name</td>
+                <td>@machine.Host</td>
+                <td><span class="badge checking">Checking</span></td>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(machine.Mac))
+                    {
+                        <form method="post">
+                            <input type="hidden" name="name" value="@machine.Name" />
+                            <button type="submit" class="wake" asp-page-handler="Wake">Wake</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

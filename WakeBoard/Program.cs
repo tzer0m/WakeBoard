@@ -1,22 +1,21 @@
-var builder = WebApplication.CreateBuilder(args);
+using WakeBoard.Models;
+using WakeBoard.Services;
 
-// Add services to the container.
+// Create web application builder.
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
+builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
+builder.Services.Configure<MachineOptions>(builder.Configuration.GetSection("WakeBoard"));
+builder.Services.AddSingleton<MachineStatusService>();
+builder.Services.AddSingleton<WakeOnLanService>();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
+// Create the web application and configure.
+WebApplication app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/error");
 }
-
 app.UseRouting();
-
-app.UseAuthorization();
-
 app.MapStaticAssets();
-app.MapRazorPages()
-   .WithStaticAssets();
-
+app.MapRazorPages().WithStaticAssets();
 app.Run();
