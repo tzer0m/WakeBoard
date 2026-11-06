@@ -1,6 +1,29 @@
+:root {
+  --accent: #4fc2e9;
+  --accent-tint: #e4f6fc;
+  --ink: #080808;
+}
+
 body {
   margin: 0;
   font-family: system-ui, sans-serif;
+  color: var(--ink);
+  background: #fff;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: var(--accent);
+  border-bottom: 3px solid var(--ink);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+header img {
+  display: block;
 }
 
 main {
@@ -40,11 +63,12 @@ th, td {
 }
 
 button {
-  background: #2d6cdf;
-  color: #fff;
-  border: 0;
+  background: var(--accent);
+  color: var(--ink);
+  border: 2px solid var(--ink);
   border-radius: 6px;
   padding: 6px 12px;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -54,7 +78,18 @@ button:disabled {
 }
 
 .message {
-  background: #e8eef9;
+  background: var(--accent-tint);
+  border-left: 4px solid var(--accent);
   padding: 10px 12px;
   border-radius: 6px;
+}
+
+footer {
+  padding: 16px;
+  text-align: center;
+  font-size: 0.75rem;
+}
+
+footer a {
+  color: inherit;
 }
