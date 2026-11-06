@@ -1,6 +1,6 @@
 # WakeBoard
 
-[![Deploy](https://github.com/tzer0m/WakeBoard/actions/workflows/deploy.yml/badge.svg)](https://github.com/tzer0m/WakeBoard/actions/workflows/deploy.yml) [![Dependabot](https://img.shields.io/badge/Dependabot-enabled-025e8c?logo=dependabot)](https://github.com/tzer0m/WakeBoard/network/updates)
+[![Deploy](https://github.com/tzer0m/WakeBoard/actions/workflows/deploy.yml/badge.svg)](https://github.com/tzer0m/WakeBoard/actions/workflows/deploy.yml) [![Dependabot](https://github.com/tzer0m/WakeBoard/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/tzer0m/WakeBoard/actions/workflows/dependabot/dependabot-updates)
 
 A small ASP.NET Core Razor Pages site that shows which machines on the home network are online and can wake, sleep or power them off. It installs as a PWA, so it can live on a phone's home screen.
 
