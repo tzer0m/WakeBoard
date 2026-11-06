@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
@@ -12,6 +13,7 @@ namespace WakeBoard.Pages;
 /// <param name="options">The WakeBoard options.</param>
 /// <param name="statusService">The status service.</param>
 /// <param name="wakeService">The wake on LAN service.</param>
+[Authorize]
 public class IndexModel(IOptions<MachineOptions> options, MachineStatusService statusService, WakeOnLanService wakeService) : PageModel
 {
     /// <summary>
