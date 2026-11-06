@@ -1,13 +1,14 @@
 # WakeBoard
 
-[![Deploy](https://github.com/tzer0m/WakeBoard/actions/workflows/deploy.yml/badge.svg)](https://github.com/tzer0m/WakeBoard/actions/workflows/deploy.yml)
+[![Deploy](https://github.com/tzer0m/WakeBoard/actions/workflows/deploy.yml/badge.svg)](https://github.com/tzer0m/WakeBoard/actions/workflows/deploy.yml) [![Dependabot](https://img.shields.io/badge/Dependabot-enabled-025e8c?logo=dependabot)](https://github.com/tzer0m/WakeBoard/network/updates)
 
-A small ASP.NET Core Razor Pages site that shows which machines on the home network are online and can wake them with Wake-on-LAN. It installs as a PWA, so it can live on a phone's home screen.
+A small ASP.NET Core Razor Pages site that shows which machines on the home network are online and can wake, sleep or power them off. It installs as a PWA, so it can live on a phone's home screen.
 
 ## Features
 
 - Live Online and Offline status for every machine, by ping or by a TCP port check where ping is blocked, refreshed on a configurable interval.
 - A Wake button for machines with a MAC address, sent with `etherwake` as a raw Ethernet frame.
+- Sleep and Power buttons for machines with a Semaphore host, run as a Semaphore task so no SSH keys live on the WakeBoard host.
 - Pocket ID (OIDC) login.
 - Installable PWA with a favicon and app icons.
 
@@ -75,7 +76,9 @@ Give each machine a `SemaphoreHost` matching its inventory hostname to show the 
 
 ## Deployment
 
-Pushes to `master` publish and deploy to a systemd service through `.github/workflows/deploy.yml`, behind a Cloudflare Tunnel. Secrets are passed as `Environment=` lines in the unit, generated from user secrets with SecretEnv.
+Pushes to `master` publish and deploy to a systemd service through `.github/workflows/deploy.yml`, behind a Cloudflare Tunnel. Secrets are passed as `Environment=` lines in the unit, generated from user secrets with SecretEnv. The deploy check and uptime monitoring use the anonymous `/health` endpoint.
+
+Dependabot checks NuGet packages weekly on Wednesdays through `.github/dependabot.yml`. Major versions are ignored, and minor and patch updates arrive as one grouped pull request.
 
 ## Credits
 
