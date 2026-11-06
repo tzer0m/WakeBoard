@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using System.Net.Http.Headers;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
+using WakeBoard.Endpoints;
 using WakeBoard.Models;
 using WakeBoard.Services;
 
@@ -61,4 +62,5 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages().WithStaticAssets();
 app.MapHealthChecks("/health");
+app.MapGet("/api/widget", WidgetEndpoint.GetAsync);
 app.Run();
