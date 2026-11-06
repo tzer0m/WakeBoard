@@ -56,6 +56,23 @@ Waking runs `sudo -n etherwake -i <Interface> <Mac>` on the host, so it needs:
 - A host interface on the same VLAN as the target, because the packet is a layer 2 frame.
 - Wake-on-LAN enabled on the target, both in its BIOS and on its NIC (`ethtool <nic>` should show `Wake-on: g`).
 
+## Power Off And Sleep
+
+Power off and sleep run a Semaphore task, so no SSH keys live on the WakeBoard host. Create a Semaphore playbook template that takes an extra var `power_action` (`shutdown` or `sleep`) and runs against the `--limit` host, then add to user secrets:
+
+```json
+{
+  "Semaphore": {
+    "BaseUrl": "https://semaphore.example.com",
+    "Token": "<api token>",
+    "ProjectId": 1,
+    "TemplateId": 1
+  }
+}
+```
+
+Give each machine a `SemaphoreHost` matching its inventory hostname to show the Sleep and Power Off buttons, and a `SemaphoreInventoryId` (the number in the inventory's Semaphore URL) so each machine uses its own inventory and credentials. The template needs the Inventory and Limit prompts enabled. Set `"CanSleep": true` on machines that support sleep, otherwise only Power Off is shown. Windows machines need to be in an inventory group called `windows`.
+
 ## Deployment
 
 Pushes to `master` publish and deploy to a systemd service through `.github/workflows/deploy.yml`, behind a Cloudflare Tunnel. Secrets are passed as `Environment=` lines in the unit, generated from user secrets with SecretEnv.

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using System.Net.Http.Headers;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.Extensions.Options;
 using WakeBoard.Models;
 using WakeBoard.Services;
 
@@ -13,6 +15,14 @@ builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true
 builder.Services.Configure<MachineOptions>(builder.Configuration.GetSection("WakeBoard"));
 builder.Services.AddSingleton<MachineStatusService>();
 builder.Services.AddSingleton<WakeOnLanService>();
+builder.Services.Configure<SemaphoreOptions>(builder.Configuration.GetSection("Semaphore"));
+builder.Services.AddHttpClient<SemaphoreService>((services, client) =>
+{
+    SemaphoreOptions semaphoreOptions = services.GetRequiredService<IOptions<SemaphoreOptions>>().Value;
+    if (string.IsNullOrWhiteSpace(semaphoreOptions.BaseUrl)) { return; }
+    client.BaseAddress = new Uri(semaphoreOptions.BaseUrl.TrimEnd('/') + "/");
+    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", semaphoreOptions.Token);
+});
 AuthenticationBuilder authentication = builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;

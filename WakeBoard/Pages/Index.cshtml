@@ -25,13 +25,29 @@
                 <td>@machine.Host</td>
                 <td><span class="badge checking">Checking</span></td>
                 <td>
-                    @if (!string.IsNullOrWhiteSpace(machine.Mac))
-                    {
-                        <form method="post">
-                            <input type="hidden" name="name" value="@machine.Name" />
-                            <button type="submit" class="wake" asp-page-handler="Wake">Wake</button>
-                        </form>
-                    }
+                    <div class="actions">
+                        @if (!string.IsNullOrWhiteSpace(machine.Mac))
+                        {
+                            <form method="post">
+                                <input type="hidden" name="name" value="@machine.Name" />
+                                <button type="submit" class="wake" asp-page-handler="Wake">Wake</button>
+                            </form>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(machine.SemaphoreHost))
+                        {
+                            @if (machine.CanSleep)
+                            {
+                                <form method="post">
+                                    <input type="hidden" name="name" value="@machine.Name" />
+                                    <button type="submit" class="power" asp-page-handler="Sleep" data-confirm="Put @machine.Name to sleep?">Sleep</button>
+                                </form>
+                            }
+                            <form method="post">
+                                <input type="hidden" name="name" value="@machine.Name" />
+                                <button type="submit" class="power danger" asp-page-handler="PowerOff" data-confirm="Power off @machine.Name?">Power Off</button>
+                            </form>
+                        }
+                    </div>
                 </td>
             </tr>
         }

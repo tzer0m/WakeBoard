@@ -72,6 +72,17 @@ button {
   cursor: pointer;
 }
 
+.actions {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+button.danger {
+  background: #b3363f;
+  color: #fff;
+}
+
 button:disabled {
   opacity: 0.4;
   cursor: not-allowed;

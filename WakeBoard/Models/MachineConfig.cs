@@ -29,4 +29,19 @@ public class MachineConfig
     /// The network interface used to send the wake packet.
     /// </summary>
     public string? Interface { get; set; }
+
+    /// <summary>
+    /// The Semaphore inventory host used to power off or sleep the machine.
+    /// </summary>
+    public string? SemaphoreHost { get; set; }
+
+    /// <summary>
+    /// The Semaphore inventory ID that holds the machine and its credentials.
+    /// </summary>
+    public int? SemaphoreInventoryId { get; set; }
+
+    /// <summary>
+    /// Whether the machine supports sleep.
+    /// </summary>
+    public bool CanSleep { get; set; }
 }
