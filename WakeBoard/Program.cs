@@ -8,6 +8,7 @@ using WakeBoard.Services;
 // Create web application builder.
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
+builder.Services.AddHealthChecks();
 builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 builder.Services.Configure<MachineOptions>(builder.Configuration.GetSection("WakeBoard"));
 builder.Services.AddSingleton<MachineStatusService>();
@@ -49,4 +50,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages().WithStaticAssets();
+app.MapHealthChecks("/health");
 app.Run();

@@ -24,4 +24,4 @@ jobs:
         run: |
           sleep 5
           sudo systemctl status WakeBoard.service --no-pager
-          curl --fail --silent --show-error --output /dev/null http://localhost:7160/
+          curl --fail --silent --show-error --output /dev/null http://localhost:7160/health
